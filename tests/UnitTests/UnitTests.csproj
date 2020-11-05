@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\BlazorWebAssemblyPWA\BlazorWebAssemblyPWA.csproj" />
+    <ProjectReference Include="..\..\src\BlazorWebAssemblyApp\BlazorWebAssemblyApp.csproj" />
   </ItemGroup>
 
 </Project>

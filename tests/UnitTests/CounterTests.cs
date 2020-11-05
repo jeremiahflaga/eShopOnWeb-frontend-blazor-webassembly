@@ -1,5 +1,5 @@
+using BlazorWebAssemblyApp.Pages;
 using Bunit;
-using BlazorWebAssemblyPWA.Pages;
 using System;
 using Xunit;
 
