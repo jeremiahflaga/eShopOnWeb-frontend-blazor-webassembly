@@ -26,3 +26,10 @@ services.AddCors(options =>
 
 - [Blazor WebAssembly - JWT Authentication Example & Tutorial](https://jasonwatmore.com/post/2020/08/13/blazor-webassembly-jwt-authentication-example-tutorial) by Jason Watmore
 
+
+
+## Errors encountered:
+
+Error: Cannot access login page, `https://localhost:44316/login`
+
+Solution: Clear browser data (perhaps there are some bugs in Blazor that will be fixed later)

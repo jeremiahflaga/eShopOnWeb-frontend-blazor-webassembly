@@ -1,7 +1,56 @@
 ﻿@page "/"
+@inject ICatalogService catalogService
 
 <h1>Hello, world!</h1>
 
 Welcome to your new app.
 
 <SurveyPrompt Title="How is Blazor working for you?" />
+
+@if (pagedCatalogItems.CatalogItems.Count <= 0)
+{
+    <p><em>Loading...</em></p>
+}
+
+@if (pagedCatalogItems.CatalogItems.Any())
+{
+    @*<partial name="_pagination" for="CatalogModel.PaginationInfo" />*@
+
+    <div>
+        @foreach (var catalogItem in pagedCatalogItems.CatalogItems)
+        {
+            <div class="col-md-4">
+
+                @*<form asp-page="/Basket/Index" method="post">
+                        <img class="esh-catalog-thumbnail" src="@catalogItem.PictureUri" />
+                        <input class="esh-catalog-button" type="submit" value="[ ADD TO BASKET ]" />
+                        <div class="esh-catalog-name">
+                            <span>@catalogItem.Name</span>
+                        </div>
+                        <div class="esh-catalog-price">
+                            <span>@catalogItem.Price.ToString("N2")</span>
+                        </div>
+                        <input type="hidden" asp-for="@catalogItem.Id" name="id" />
+                        <input type="hidden" asp-for="@catalogItem.Name" name="name" />
+                        <input type="hidden" asp-for="@catalogItem.PictureUri" name="pictureUri" />
+                        <input type="hidden" asp-for="@catalogItem.Price" name="price" />
+                    </form>*@
+                <img src="@catalogItem.PictureUri" />
+            </div>
+        }
+    </div>
+    @*<partial name="_pagination" for="CatalogModel.PaginationInfo" />*@
+}
+
+@code {
+    private ListPagedCatalogItemResponse pagedCatalogItems = new ListPagedCatalogItemResponse();
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        pagedCatalogItems = await catalogService.ListPaged();
+    }
+
+    protected override async void OnInitialized()
+    {
+    }
+}
