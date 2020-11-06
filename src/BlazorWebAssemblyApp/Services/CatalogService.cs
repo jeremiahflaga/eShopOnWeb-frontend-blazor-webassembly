@@ -8,7 +8,8 @@ namespace BlazorWebAssemblyApp.Services
 {
     public interface ICatalogService
     {
-        Task<ListPagedCatalogItemResponse> ListPaged(int pageSize = 10, int pageIndex = 0);
+        Task<GetCatalogItemResponse> GetCatalogItemAsync(int id);
+        Task<ListPagedCatalogItemResponse> ListPagedCatalogItemsAsync(int pageSize = 10, int pageIndex = 0);
     }
 
     public class CatalogService : ICatalogService
@@ -20,9 +21,24 @@ namespace BlazorWebAssemblyApp.Services
             _httpService = httpService;
         }
 
-        public async Task<ListPagedCatalogItemResponse> ListPaged(int pageSize = 10, int pageIndex = 0)
+        public async Task<GetCatalogItemResponse> GetCatalogItemAsync(int id)
         {
-            return await _httpService.Get<ListPagedCatalogItemResponse>($"/api/catalog-items?PageSize={pageSize}&PageIndex={pageIndex}");
+            var item = await _httpService.Get<GetCatalogItemResponse>($"/api/catalog-items/{id}");
+            return item;
+        }
+
+        public async Task<ListPagedCatalogItemResponse> ListPagedCatalogItemsAsync(int pageSize = 10, int pageIndex = 0)
+        {
+            try
+            {
+                var result = await _httpService.Get<ListPagedCatalogItemResponse>($"/api/catalog-items?PageSize={pageSize}&PageIndex={pageIndex}");
+                return result;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
     }
 }

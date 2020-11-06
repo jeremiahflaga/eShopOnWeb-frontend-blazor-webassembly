@@ -37,6 +37,10 @@ namespace BlazorWebAssemblyApp
 				return new HttpClient() { BaseAddress = apiUrl };
 			});
 
+			// Named HttpClient with IHttpClientFactory: https://docs.microsoft.com/en-us/aspnet/core/blazor/call-web-api?view=aspnetcore-3.1#named-httpclient-with-ihttpclientfactory
+			builder.Services.AddHttpClient("LocalHttpClient", client =>
+				client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress));
+
 			var host = builder.Build();
 
 			var authenticationService = host.Services.GetRequiredService<IAuthenticationService>();
