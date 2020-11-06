@@ -1,6 +1,8 @@
 ﻿@page "/"
+@attribute [Authorize]
 @inject ICatalogService catalogService
 @inject IHttpClientFactory ClientFactory
+@inject IConfiguration Configuration
 
 <h1>Hello, world!</h1>
 
@@ -35,7 +37,7 @@ else
                         <input type="hidden" asp-for="@catalogItem.PictureUri" name="pictureUri" />
                         <input type="hidden" asp-for="@catalogItem.Price" name="price" />
                     </form>*@
-                <img src="@catalogItem.PictureUri" />
+                <img src="@($"{Configuration["webUrl"]}/{catalogItem.PictureUri}")" />
             </div>
         }
     </div>

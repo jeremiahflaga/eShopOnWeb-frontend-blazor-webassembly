@@ -1,6 +1,7 @@
 @page "/fetchdata"
 @inject IHttpClientFactory ClientFactory
 @inject ICatalogService catalogService
+@inject IConfiguration Configuration
 
 <h1>Weather forecast</h1>
 
@@ -47,22 +48,20 @@ else
         @foreach (var catalogItem in pagedCatalogItems.CatalogItems)
         {
             <div class="col-md-4">
-                asdf
-                @*<form asp-page="/Basket/Index" method="post">
-                        <img class="esh-catalog-thumbnail" src="@catalogItem.PictureUri" />
-                        <input class="esh-catalog-button" type="submit" value="[ ADD TO BASKET ]" />
-                        <div class="esh-catalog-name">
-                            <span>@catalogItem.Name</span>
-                        </div>
-                        <div class="esh-catalog-price">
-                            <span>@catalogItem.Price.ToString("N2")</span>
-                        </div>
-                        <input type="hidden" asp-for="@catalogItem.Id" name="id" />
-                        <input type="hidden" asp-for="@catalogItem.Name" name="name" />
-                        <input type="hidden" asp-for="@catalogItem.PictureUri" name="pictureUri" />
-                        <input type="hidden" asp-for="@catalogItem.Price" name="price" />
-                    </form>*@
-                <img src="@catalogItem.PictureUri" />
+                <form asp-page="/Basket/Index" method="post">
+                    <img class="esh-catalog-thumbnail" src="@($"{Configuration["webUrl"]}/{catalogItem.PictureUri}")" />
+                    <input class="esh-catalog-button" type="submit" value="[ ADD TO BASKET ]" />
+                    <div class="esh-catalog-name">
+                        <span>@catalogItem.Name</span>
+                    </div>
+                    <div class="esh-catalog-price">
+                        <span>@catalogItem.Price.ToString("N2")</span>
+                    </div>
+                    <input type="hidden" asp-for="@catalogItem.Id" name="id" />
+                    <input type="hidden" asp-for="@catalogItem.Name" name="name" />
+                    <input type="hidden" asp-for="@catalogItem.PictureUri" name="pictureUri" />
+                    <input type="hidden" asp-for="@catalogItem.Price" name="price" />
+                </form>
             </div>
         }
     </div>
