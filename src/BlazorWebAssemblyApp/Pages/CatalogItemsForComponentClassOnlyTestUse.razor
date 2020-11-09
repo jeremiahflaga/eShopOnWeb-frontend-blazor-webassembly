@@ -1,6 +1,4 @@
-﻿@page "/catalog-items"
-@inject IConfiguration Configuration
-@inject ICatalogService CatalogService
+﻿@page "/catalog-items-for-component-class-only-tests"
 
 @if (pagedCatalogItems == null)
 {
@@ -43,24 +41,31 @@ else
 
 @code {
 
-    private const int PAGE_SIZE = 5;
     private int currentPageIndex = 0;
-    private ListPagedCatalogItemResponse pagedCatalogItems;
+
+    public ListPagedCatalogItemResponse pagedCatalogItems;
+    protected int PageSize { get; set; } = 5;
+
+    [Inject]
+    protected ICatalogService CatalogService { get; set; }
+
+    [Inject]
+    protected IConfiguration Configuration { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        pagedCatalogItems = await CatalogService.ListPagedCatalogItemsAsync(0, PAGE_SIZE);
+        pagedCatalogItems = await CatalogService.ListPagedCatalogItemsAsync(0, PageSize);
     }
 
     public async Task OnClickNext()
     {
         if (currentPageIndex < pagedCatalogItems.PageCount - 1)
-            pagedCatalogItems = await CatalogService.ListPagedCatalogItemsAsync(++currentPageIndex, PAGE_SIZE);
+            pagedCatalogItems = await CatalogService.ListPagedCatalogItemsAsync(++currentPageIndex, PageSize);
     }
 
     protected async Task OnClickPrevious()
     {
         if (currentPageIndex > 0)
-            pagedCatalogItems = await CatalogService.ListPagedCatalogItemsAsync(--currentPageIndex, PAGE_SIZE);
+            pagedCatalogItems = await CatalogService.ListPagedCatalogItemsAsync(--currentPageIndex, PageSize);
     }
 }

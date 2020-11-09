@@ -26,6 +26,8 @@ services.AddCors(options =>
 
 - [Blazor WebAssembly - JWT Authentication Example & Tutorial](https://jasonwatmore.com/post/2020/08/13/blazor-webassembly-jwt-authentication-example-tutorial) by Jason Watmore
 
+- [Named HttpClient with IHttpClientFactory](https://docs.microsoft.com/en-us/aspnet/core/blazor/call-web-api?view=aspnetcore-3.1#named-httpclient-with-ihttpclientfactory)
+
 
 
 ## Errors encountered:

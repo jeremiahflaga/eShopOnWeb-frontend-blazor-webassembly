@@ -3,7 +3,7 @@ using Bunit;
 using System;
 using Xunit;
 
-namespace UnitTests
+namespace FunctionalTests
 {
 	public class CounterTests
 	{

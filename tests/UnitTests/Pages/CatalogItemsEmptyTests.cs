@@ -20,13 +20,13 @@ namespace Pages
             using var ctx = new TestContext();
             ctx.Services.AddScoped(x => new Mock<Microsoft.Extensions.Configuration.IConfiguration>().Object);
             ctx.Services.AddScoped(x => new Mock<ICatalogService>().Object);
-            var cut = ctx.RenderComponent<CatalogItems>();
+            var sut = ctx.RenderComponent<CatalogItems>();
 
             // Act
-            var paraElm = cut.Find("[data-test='loading']");
+            var elem = sut.Find("[data-test='loading']");
 
             // Assert
-            Assert.NotNull(paraElm);
+            Assert.NotNull(elem);
         }
     }
 }

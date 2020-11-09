@@ -1,60 +1,74 @@
 using AngleSharp;
 using AngleSharp.Text;
+using BlazorWebAssemblyApp.Models;
 using BlazorWebAssemblyApp.Pages;
 using BlazorWebAssemblyApp.Services;
 using Bunit;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace Pages
 {
-	public class CatalogItemsTests : TestContext
+    public class CatalogItemsTests : TestContext
     {
-        IRenderedComponent<CatalogItems> cut; // component under test
-
+        Mock<ICatalogService> catalogServiceMock = new Mock<ICatalogService>();
         public CatalogItemsTests()
         {
-            // Arrange
-            var catalogService = new Mock<ICatalogService>();
-            catalogService.Setup(x => x.ListPagedCatalogItemsAsync(It.IsAny<int>(), It.IsAny<int>()))
+            catalogServiceMock.Setup(x => x.ListPagedCatalogItemsAsync(It.IsAny<int>(), It.IsAny<int>()))
                     .Returns(Task.FromResult(new BlazorWebAssemblyApp.Models.ListPagedCatalogItemResponse()));
-            
+
             this.Services.AddScoped(x => new Mock<Microsoft.Extensions.Configuration.IConfiguration>().Object);
-            this.Services.AddScoped(x => catalogService.Object);
-
-            cut = this.RenderComponent<CatalogItems>();
+            this.Services.AddScoped(x => catalogServiceMock.Object);
         }
 
         [Fact]
-        public void ShouldShowCatalogItems()
+        public void shows_catalog_items()
         {
-            // Act
-            var paraElm = cut.Find("[data-test='catalog-items']");
-
-            // Assert
-            Assert.NotNull(paraElm);
+            var sut = this.RenderComponent<CatalogItems>();
+            var elem = sut.Find("[data-test='catalog-items']");
+            Assert.NotNull(elem);
         }
 
         [Fact]
-        public void ShouldShowPagination()
+        public void shows_pagination()
         {
-            // Arrange
-            using var ctx = new TestContext();
-            ctx.Services.AddScoped(x => new Mock<Microsoft.Extensions.Configuration.IConfiguration>().Object);
-            var catalogService = new Mock<ICatalogService>();
-            catalogService.Setup(x => x.ListPagedCatalogItemsAsync(It.IsAny<int>(), It.IsAny<int>()))
-                .Returns(Task.FromResult(new BlazorWebAssemblyApp.Models.ListPagedCatalogItemResponse()));
-            ctx.Services.AddScoped(x => catalogService.Object);
-            var cut = ctx.RenderComponent<CatalogItems>();
-
-            // Act
-            var paraElm = cut.Find("[data-test='pagination']");
-
-            // Assert
-            Assert.NotNull(paraElm);
+            var sut = this.RenderComponent<CatalogItems>();
+            var elem = sut.Find("[data-test='pagination']");
+            Assert.NotNull(elem);
         }
+
+        [Fact]
+        public void shows_correct_number_of_catalog_items_on_first_page()
+        {
+            var pageSize = 5;
+            catalogServiceMock.Setup(x => x.ListPagedCatalogItemsAsync(It.IsAny<int>(), It.IsAny<int>()))
+                    .Returns(Task.FromResult(new ListPagedCatalogItemResponse()
+                    {
+                        CatalogItems = generateCatalogItems(pageSize).ToList(),
+                        PageCount = It.IsAny<int>()
+                    }));
+
+            var sut = this.RenderComponent<CatalogItems>();
+            var elems = sut.FindAll("[data-test='catalog-item']");
+
+            Assert.Equal(pageSize, elems.Count);
+        }
+
+        private IEnumerable<CatalogItem> generateCatalogItems(int count)
+        {
+            for (int i = 0; i < count; i++)
+                yield return new CatalogItem
+                {
+                    Id = i,
+                    Name = Faker.Lorem.Words(3).ToString(),
+                    Description = Faker.Lorem.Sentence(10),
+                };
+        }
+
     }
 }
