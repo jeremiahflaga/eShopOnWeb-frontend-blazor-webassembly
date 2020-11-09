@@ -9,8 +9,13 @@
 else
 {
     @*<partial name="_pagination" for="CatalogModel.PaginationInfo" />*@
+    <div data-test="paginator">
+        <a @onclick="OnClickPrevious" class="btn btn-primary @(currentPageIndex > 0 ? "" : "disabled")">Previous</a>
+        <p>Showing page @(currentPageIndex + 1) of @pagedCatalogItems.PageCount</p>
+        <a @onclick="OnClickNext" class="btn btn-primary @(currentPageIndex < pagedCatalogItems.PageCount - 1 ? "" : "disabled")">Next</a>
+    </div>
 
-    <div class="container">
+    <div data-test="catalog-items" class="container">
         <div>
             @foreach (var catalogItem in pagedCatalogItems.CatalogItems)
             {
@@ -37,10 +42,25 @@ else
 }
 
 @code {
-private ListPagedCatalogItemResponse pagedCatalogItems;
 
-protected override async Task OnInitializedAsync()
-{
-    pagedCatalogItems = await catalogService.ListPagedCatalogItemsAsync();
-}
+    private const int PAGE_SIZE = 5;
+    private ListPagedCatalogItemResponse pagedCatalogItems;
+    private int currentPageIndex = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        pagedCatalogItems = await catalogService.ListPagedCatalogItemsAsync(0, PAGE_SIZE);
+    }
+
+    protected async Task OnClickNext()
+    {
+        if (currentPageIndex < pagedCatalogItems.PageCount - 1)
+            pagedCatalogItems = await catalogService.ListPagedCatalogItemsAsync(++currentPageIndex, PAGE_SIZE);
+    }
+
+    protected async Task OnClickPrevious()
+    {
+        if (currentPageIndex > 0)
+            pagedCatalogItems = await catalogService.ListPagedCatalogItemsAsync(--currentPageIndex, PAGE_SIZE);
+    }
 }

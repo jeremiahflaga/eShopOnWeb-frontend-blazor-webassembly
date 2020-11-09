@@ -9,7 +9,7 @@ namespace BlazorWebAssemblyApp.Services
     public interface ICatalogService
     {
         Task<GetCatalogItemResponse> GetCatalogItemAsync(int id);
-        Task<ListPagedCatalogItemResponse> ListPagedCatalogItemsAsync(int pageSize = 10, int pageIndex = 0);
+        Task<ListPagedCatalogItemResponse> ListPagedCatalogItemsAsync(int pageIndex = 0, int pageSize = 10);
     }
 
     public class CatalogService : ICatalogService
@@ -27,7 +27,7 @@ namespace BlazorWebAssemblyApp.Services
             return item;
         }
 
-        public async Task<ListPagedCatalogItemResponse> ListPagedCatalogItemsAsync(int pageSize = 10, int pageIndex = 0)
+        public async Task<ListPagedCatalogItemResponse> ListPagedCatalogItemsAsync(int pageIndex = 0, int pageSize = 10)
         {
             try
             {
