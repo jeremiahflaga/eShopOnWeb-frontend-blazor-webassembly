@@ -31,5 +31,19 @@ namespace UnitTests
             // Assert
             paraElmText.MarkupMatches("Current count: 1");
         }
+
+        [Fact]
+        public void ShouldShowTestDiv()
+        {
+            // Arrange
+            using var ctx = new TestContext();
+            var cut = ctx.RenderComponent<Counter>();
+
+            // Act
+            var paraElm = cut.Find("[data-test='test']");
+
+            // Assert
+            Assert.NotNull(paraElm);
+        }
     }
 }

@@ -1,4 +1,4 @@
-@page "/catalog-items"
+﻿@page "/catalog-items"
 @inject ICatalogService catalogService
 @inject IConfiguration Configuration
 
@@ -9,7 +9,7 @@
 else
 {
     @*<partial name="_pagination" for="CatalogModel.PaginationInfo" />*@
-    <div data-test="paginator">
+    <div data-test="pagination">
         <a @onclick="OnClickPrevious" class="btn btn-primary @(currentPageIndex > 0 ? "" : "disabled")">Previous</a>
         <p>Showing page @(currentPageIndex + 1) of @pagedCatalogItems.PageCount</p>
         <a @onclick="OnClickNext" class="btn btn-primary @(currentPageIndex < pagedCatalogItems.PageCount - 1 ? "" : "disabled")">Next</a>
