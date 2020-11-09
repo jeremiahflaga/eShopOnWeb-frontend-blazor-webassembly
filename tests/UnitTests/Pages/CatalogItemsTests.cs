@@ -11,20 +11,26 @@ using Xunit;
 
 namespace Pages
 {
-	public class CatalogItemsTests
-	{
+	public class CatalogItemsTests : TestContext
+    {
+        IRenderedComponent<CatalogItems> cut; // component under test
+
+        public CatalogItemsTests()
+        {
+            // Arrange
+            var catalogService = new Mock<ICatalogService>();
+            catalogService.Setup(x => x.ListPagedCatalogItemsAsync(It.IsAny<int>(), It.IsAny<int>()))
+                    .Returns(Task.FromResult(new BlazorWebAssemblyApp.Models.ListPagedCatalogItemResponse()));
+            
+            this.Services.AddScoped(x => new Mock<Microsoft.Extensions.Configuration.IConfiguration>().Object);
+            this.Services.AddScoped(x => catalogService.Object);
+
+            cut = this.RenderComponent<CatalogItems>();
+        }
+
         [Fact]
         public void ShouldShowCatalogItems()
         {
-            // Arrange
-            using var ctx = new TestContext();
-            ctx.Services.AddScoped(x => new Mock<Microsoft.Extensions.Configuration.IConfiguration>().Object);
-            var catalogService = new Mock<ICatalogService>();
-            catalogService.Setup(x => x.ListPagedCatalogItemsAsync(It.IsAny<int>(), It.IsAny<int>()))
-                .Returns(Task.FromResult(new BlazorWebAssemblyApp.Models.ListPagedCatalogItemResponse()));
-            ctx.Services.AddScoped(x => catalogService.Object);
-            var cut = ctx.RenderComponent<CatalogItems>();
-
             // Act
             var paraElm = cut.Find("[data-test='catalog-items']");
 
