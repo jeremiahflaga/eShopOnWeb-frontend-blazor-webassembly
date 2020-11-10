@@ -9,7 +9,7 @@ using System;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Pages
+namespace UnitTests.Pages
 {
 	public class CatalogItemsEmptyTests
 	{

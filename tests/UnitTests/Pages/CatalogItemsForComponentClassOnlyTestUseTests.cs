@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Pages
+namespace UnitTests.Pages
 {
     // NOTE_JBOY: This is a sample unit test which does not access the HTML of the Blazor 
     // compoment and which does not use BUnit
@@ -76,5 +76,4 @@ namespace Pages
             base.PageSize = pageSize;
         }
     }
-}
 }

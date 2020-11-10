@@ -12,7 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Pages
+namespace UnitTests.Pages
 {
     public class CatalogItemsTests : TestContext
     {
