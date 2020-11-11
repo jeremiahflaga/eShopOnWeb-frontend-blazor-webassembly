@@ -51,7 +51,8 @@ namespace e2eTests.Catalog
             var elem = sut.Find("[data-test='loading']");
 
             // Assert
-            Assert.NotNull(elem);
+            // WaitForAssertion: https://github.com/egil/bunit/issues/122
+            sut.WaitForAssertion(() => Assert.NotNull(elem));
         }
     }
 }
