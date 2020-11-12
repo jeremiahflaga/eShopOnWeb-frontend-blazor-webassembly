@@ -9,9 +9,9 @@ using System;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace UnitTests.Pages
+namespace UnitTests.Catalog
 {
-	public class CatalogItemsEmptyTests
+	public class Catalog_FailureTests
 	{
         [Fact]
         public void ShouldShowLoading()

@@ -1,5 +1,5 @@
 using BlazorWebAssemblyApp.Models;
-using BlazorWebAssemblyApp.Pages;
+using BlazorWebAssemblyApp.Pages._Ignore;
 using BlazorWebAssemblyApp.Services;
 using Microsoft.Extensions.Configuration;
 using Moq;
@@ -8,8 +8,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace UnitTests.Pages
+namespace UnitTests.Catalog
 {
+    // NOTE_JBOY: Please ignore this test. 
     // NOTE_JBOY: This is a sample unit test which does not access the HTML of the Blazor 
     // compoment and which does not use BUnit
     // LESSON LEARNED (Nov 9, 2020): seems like it's best to just do unit test for UI 

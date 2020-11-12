@@ -1,13 +1,15 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Support.UI;
 using System;
 using Xunit;
 
 namespace e2eTests.Selenium
 {
+    // REF: "DevOps Blazor WebAssembly Solution: Part 4 - End to End UI Test" - https://dev.to/kenakamu/devops-blazor-webassembly-solution-part-4-end-to-end-ui-test-1b3g
     // NOTE: seems like these Selenium tests assumes that the app is already running
     // before you run the tests
+    // Run the BlazorWebAssemblyApp suing `dotnet run` on the default port, prot 5000
+    // before running the tests in e2eTests.Selenium
     public sealed class CounterTests : IDisposable
     {
         private IWebDriver driver;

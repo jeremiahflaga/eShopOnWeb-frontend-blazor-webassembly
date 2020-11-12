@@ -12,12 +12,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace UnitTests.Pages
+namespace UnitTests.Catalog
 {
-    public class CatalogItemsTests : TestContext
+    public class Catalog_SuccessTests : TestContext
     {
         Mock<ICatalogService> catalogServiceMock = new Mock<ICatalogService>();
-        public CatalogItemsTests()
+        public Catalog_SuccessTests()
         {
             catalogServiceMock.Setup(x => x.ListPagedCatalogItemsAsync(It.IsAny<int>(), It.IsAny<int>()))
                     .Returns(Task.FromResult(new BlazorWebAssemblyApp.Models.ListPagedCatalogItemResponse()));
@@ -45,7 +45,7 @@ namespace UnitTests.Pages
         [Fact]
         public void shows_correct_number_of_catalog_items_on_first_page()
         {
-            var pageSize = 5;
+            var pageSize = 7;
             catalogServiceMock.Setup(x => x.ListPagedCatalogItemsAsync(It.IsAny<int>(), It.IsAny<int>()))
                     .Returns(Task.FromResult(new ListPagedCatalogItemResponse()
                     {
