@@ -1,6 +1,7 @@
 ﻿@page "/catalog-items"
 @inject IConfiguration Configuration
 @inject ICatalogService CatalogService
+@inject IBasketService BasketService
 
 @if (pagedCatalogItems == null)
 {
@@ -19,22 +20,22 @@ else
         <div>
             @foreach (var catalogItem in pagedCatalogItems.CatalogItems)
             {
-                <div data-test="catalog-item" class="col-md-4">
-                    <form asp-page="/Basket/Index" method="post">
-                        <img class="esh-catalog-thumbnail" src="@($"{Configuration["webUrl"]}/{catalogItem.PictureUri}")" />
-                        <input class="esh-catalog-button" type="submit" value="[ ADD TO BASKET ]" />
-                        <div class="esh-catalog-name">
-                            <span>@catalogItem.Name</span>
-                        </div>
-                        <div class="esh-catalog-price">
-                            <span>@catalogItem.Price.ToString("N2")</span>
-                        </div>
-                        <input type="hidden" asp-for="@catalogItem.Id" name="id" />
-                        <input type="hidden" asp-for="@catalogItem.Name" name="name" />
-                        <input type="hidden" asp-for="@catalogItem.PictureUri" name="pictureUri" />
-                        <input type="hidden" asp-for="@catalogItem.Price" name="price" />
-                    </form>
+            <div data-test="catalog-item" class="col-md-4">
+                @*<form asp-page="/Basket/Index" method="post">*@
+                <img class="esh-catalog-thumbnail" src="@($"{Configuration["webUrl"]}/{catalogItem.PictureUri}")" />
+                <input class="esh-catalog-button" @onclick="(() => OnAddToBasket(catalogItem.Id))" value="[ ADD TO BASKET ]" />
+                <div class="esh-catalog-name">
+                    <span>@catalogItem.Name</span>
                 </div>
+                <div class="esh-catalog-price">
+                    <span>@catalogItem.Price.ToString("N2")</span>
+                </div>
+                <input type="hidden" asp-for="@catalogItem.Id" name="id" />
+                <input type="hidden" asp-for="@catalogItem.Name" name="name" />
+                <input type="hidden" asp-for="@catalogItem.PictureUri" name="pictureUri" />
+                <input type="hidden" asp-for="@catalogItem.Price" name="price" />
+                @*</form>*@
+            </div>
             }
         </div>
     </div>
@@ -46,6 +47,7 @@ else
     private const int PAGE_SIZE = 5;
     private int currentPageIndex = 0;
     private ListPagedCatalogItemResponse pagedCatalogItems;
+    private GetBasketResponse basket;
 
     protected override async Task OnInitializedAsync()
     {
@@ -62,5 +64,12 @@ else
     {
         if (currentPageIndex > 0)
             pagedCatalogItems = await CatalogService.ListPagedCatalogItemsAsync(--currentPageIndex, PAGE_SIZE);
+    }
+
+    protected async Task OnAddToBasket(int catalogItemId)
+    {
+        //if (basket == null)
+        //    basket = await BasketService.GetBasket();
+        await BasketService.AddItemToBasket(catalogItemId);
     }
 }

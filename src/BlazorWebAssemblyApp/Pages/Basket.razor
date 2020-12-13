@@ -1,10 +1,9 @@
 ﻿@page "/basket"
 @inject IConfiguration Configuration
-@inject ICatalogService CatalogService
+@inject IBasketService BasketService
 
 <div class="container">
-
-    @if (Model.BasketModel.Items.Any())
+    @if (basket != null && basket.Items.Any())
     {
         <form method="post">
             <article class="esh-basket-titles row">
@@ -17,9 +16,9 @@
             </article>
             <div class="esh-catalog-items row">
                 <div asp-validation-summary="All" class="text-danger"></div>
-                @for (int i = 0; i < Model.BasketModel.Items.Count; i++)
+                @for (int i = 0; i < basket.Items.Count; i++)
                 {
-                    var item = Model.BasketModel.Items[i];
+                    var item = basket.Items[i];
                     <article class="esh-basket-items row">
                         <div>
                             <section class="esh-basket-item esh-basket-item--middle col-lg-3 hidden-lg-down">
@@ -47,7 +46,7 @@
 
                     <article class="esh-basket-items row">
                         <section class="esh-basket-item col-xs-10"></section>
-                        <section class="esh-basket-item esh-basket-item--mark col-xs-2">$ @Model.BasketModel.Total().ToString("N2")</section>
+                        <section class="esh-basket-item esh-basket-item--mark col-xs-2">$ @basket.Total().ToString("N2")</section>
                     </article>
 
                     <article class="esh-basket-items row">
@@ -77,16 +76,23 @@
         </h3>
 
         <section class="esh-basket-item">
-            <a asp-page="/Index" class="btn esh-basket-checkout text-white">[ Continue Shopping..]</a>
+            <a @onclick="OnReload" class="btn esh-basket-checkout text-white">[ Reload..]</a>
         </section>
     }
 </div>
 
 @code {
 
-    public BasketViewModel BasketModel { get; set; } = new BasketViewModel();
+    private GetBasketResponse basket;
 
     protected override async Task OnInitializedAsync()
     {
+        basket = await BasketService.GetBasket();
     }
+
+    public async Task OnReload()
+    {
+        basket = await BasketService.GetBasket();
+    }
+
 }

@@ -24,7 +24,8 @@ namespace BlazorWebAssemblyApp
 				.AddScoped<IUserService, UserService>()
 				.AddScoped<IHttpService, HttpService>()
 				.AddScoped<ILocalStorageService, LocalStorageService>()
-				.AddScoped<ICatalogService, CatalogService>();
+				.AddScoped<ICatalogService, CatalogService>()
+				.AddScoped<IBasketService, BasketService>();
 
 			// configure http client
 			builder.Services.AddScoped(x => {

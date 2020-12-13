@@ -3,6 +3,8 @@
 A sample frontend project for eShopOnWeb (https://github.com/dotnet-architecture/eShopOnWeb) using Blazor WebAssembly PWA
 
 
+## Step 1
+
 Be sure to `AllowAnyOrigin()` in CORS in the backend API
 
 ``` csharp
@@ -20,6 +22,15 @@ services.AddCors(options =>
 ```
 
 ... or else you will encounter the `Children could not be evaluated` error.
+
+
+## Step 2
+
+Set the Startup project to the `docker-compose` project in Visual Studio 2019
+
+**Run using Docker** so that the backend API and the Web projects of eShopOnWeb will both start, and so that the URLs will match the ones being used in `wwwrot/appsettings.json` of the Blazor project
+
+
 
 
 ## References:
