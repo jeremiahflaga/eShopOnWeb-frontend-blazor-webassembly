@@ -1,5 +1,7 @@
 ﻿@inherits LayoutComponentBase
 @inject IAuthenticationService AuthenticationService
+@inject IBasketService BasketService
+@inject IBasketNotificationMessageService BasketNotificationMessageService
 
 <div class="sidebar">
     <NavMenu />
@@ -12,6 +14,18 @@
         @if (AuthenticationService.User != null)
         {
             <a href="/logout" class="ml-md-5">Logout</a>
+
+            if (basket != null)
+            {
+                <NavLink class="esh-basketstatus" href="basket">
+                    <div class="esh-basketstatus-image">
+                        <img src="/images/cart.png" />
+                    </div>
+                    <div class="esh-basketstatus-badge">
+                        @basket.Items.Count
+                    </div>
+                </NavLink>
+            }
         }
         else
         {
@@ -23,3 +37,27 @@
         @Body
     </div>
 </div>
+
+@code {
+
+    private GetBasketResponse basket;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (AuthenticationService.User != null)
+        {
+            basket = await BasketService.GetBasket();
+
+            // subscribe to OnMessage event
+            BasketNotificationMessageService.OnMessage += BasketNotificationMessageHandler;
+        }
+    }
+
+
+    private async void BasketNotificationMessageHandler()
+    {
+        basket = await BasketService.GetBasket();
+        StateHasChanged();
+    }
+}

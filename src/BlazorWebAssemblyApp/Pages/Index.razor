@@ -88,6 +88,7 @@ else
         try
         {
             pagedCatalogItems = await catalogService.ListPagedCatalogItemsAsync();
+            //StateHasChanged();
         }
         catch (Exception ex)
         {

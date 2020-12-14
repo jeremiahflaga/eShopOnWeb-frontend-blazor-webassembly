@@ -13,7 +13,8 @@ using System.Threading.Tasks;
 
 namespace BlazorWebAssemblyApp.Services
 {
-    // from "Blazor WebAssembly - JWT Authentication Example & Tutorial" by Jason Watmore https://jasonwatmore.com/post/2020/08/13/blazor-webassembly-jwt-authentication-example-tutorial#http-service-cs
+    // from "Blazor WebAssembly - JWT Authentication Example & Tutorial" by Jason Watmore 
+    // https://jasonwatmore.com/post/2020/08/13/blazor-webassembly-jwt-authentication-example-tutorial#http-service-cs
     public interface IHttpService
     {
         Task<T> Get<T>(string uri);

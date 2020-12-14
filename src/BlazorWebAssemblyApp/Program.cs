@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using BlazorWebAssemblyApp.Services;
 using BlazorWebAssemblyApp.Helpers;
+using BlazorWebAssemblyApp.MessageServices;
 
 namespace BlazorWebAssemblyApp
 {
@@ -25,7 +26,8 @@ namespace BlazorWebAssemblyApp
 				.AddScoped<IHttpService, HttpService>()
 				.AddScoped<ILocalStorageService, LocalStorageService>()
 				.AddScoped<ICatalogService, CatalogService>()
-				.AddScoped<IBasketService, BasketService>();
+				.AddScoped<IBasketService, BasketService>()
+				.AddScoped<IBasketNotificationMessageService, BasketNotificationMessageService>();
 
 			// configure http client
 			builder.Services.AddScoped(x => {
