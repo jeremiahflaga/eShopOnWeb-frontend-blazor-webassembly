@@ -3,7 +3,7 @@
 A sample frontend project for eShopOnWeb (https://github.com/dotnet-architecture/eShopOnWeb) using Blazor WebAssembly PWA
 
 
-## Step 1.1 - Open the eShopOnWeb project in Visual Studio 2019
+## Step 1.1 - Open the eShopOnWeb project
 
 This is the code from https://github.com/dotnet-architecture/eShopOnWeb, but I added some public API for adding items to the basket
 
@@ -31,14 +31,53 @@ services.AddCors(options =>
 ... or else you will encounter the `Children could not be evaluated` error.
 
 
+### Step 1.3 - Disable HTTPS redirection PublicAPI project (for demo purposes only)
 
-### Step 1.3 - Set Multiple startup projects and set `PublicAPI` and `Web` projects as startup projects
+Open the file `\eShopOnWeb\src\PublicApi\Startup.cs` then comment out `app.UseHttpsRedirection();` like so:
 
-![multiple-startup-projects.png](multiple-startup-projects.png)
+```
+public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+{
+	...
+	
+    // app.UseHttpsRedirection();
+    
+    ...
+}
 
+```
 
-### Step 1.4 - Run in Visual Studio
+### Step 1.4 - Run PublicAPI on the command line
 
+On the command line, navigate to the folder `\eShopOnWeb\src\PublicApi` then run
+
+```
+dotnet run
+```
+
+### Step 1.5 - Disable HTTPS redirection in Web project (for demo purposes only)
+
+Open the file `\eShopOnWeb\src\Web\Startup.cs` then comment out `app.UseHttpsRedirection();` like so:
+
+```
+public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+{
+	...
+	
+    // app.UseHttpsRedirection();
+    
+    ...
+}
+
+```
+
+### Step 1.6 - Run the Web project on the command line (you have to run the Web project also because the images are being served from here)
+
+On the command line, navigate to the folder `\eShopOnWeb\src\Web` then run
+
+```
+dotnet run
+```
 
 ## Step 2: Open `eShopOnWeb-frontend-blazor-webassembly` in Visual Studio 2019 then run it
 

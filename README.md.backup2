@@ -3,11 +3,19 @@
 A sample frontend project for eShopOnWeb (https://github.com/dotnet-architecture/eShopOnWeb) using Blazor WebAssembly PWA
 
 
-## Step 1.1 - Open the eShopOnWeb project in Visual Studio 2019
+## Step 1.1 - Download `eShopOnWeb` project and checkout the branch named `public-api-for-basket`
 
-This is the code from https://github.com/dotnet-architecture/eShopOnWeb, but I added some public API for adding items to the basket
+```
+git clone https://github.com/jeremiahflaga/eShopOnWeb.git
+``` 
 
-**Be sure that you are on the branch named `public-api-for-basket-2`**
+```
+cd eShopOnWeb
+```
+
+```
+git checkout public-api-for-basket
+```
 
 
 ### Step 1.2 - Be sure to `AllowAnyOrigin()` in CORS in the backend API
@@ -31,13 +39,15 @@ services.AddCors(options =>
 ... or else you will encounter the `Children could not be evaluated` error.
 
 
+### Step 1.3
 
-### Step 1.3 - Set Multiple startup projects and set `PublicAPI` and `Web` projects as startup projects
+Set the Startup project to the `docker-compose` project in Visual Studio 2019.
 
-![multiple-startup-projects.png](multiple-startup-projects.png)
+Then **run using Docker** so that the backend API and the Web projects of eShopOnWeb will both start, and so that the URLs will match the ones being used in `wwwrot/appsettings.json` of the Blazor project
 
+-- OR run `docker-compose up` on the command line --
 
-### Step 1.4 - Run in Visual Studio
+Be sure that the API is running on port **5200** (`http://localhost:5200/`)
 
 
 ## Step 2: Open `eShopOnWeb-frontend-blazor-webassembly` in Visual Studio 2019 then run it

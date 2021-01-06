@@ -37,8 +37,6 @@ services.AddCors(options =>
 ![multiple-startup-projects.png](multiple-startup-projects.png)
 
 
-### Step 1.4 - Run in Visual Studio
-
 
 ## Step 2: Open `eShopOnWeb-frontend-blazor-webassembly` in Visual Studio 2019 then run it
 
